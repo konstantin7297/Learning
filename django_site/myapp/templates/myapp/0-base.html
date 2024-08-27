@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block urls %}
+<ul>
+    <li><a href="{% url 'myapp:set-cookie-session' %}">Set cookie</a></li>
+    <li><a href="{% url 'myapp:delete-view' pk=1 %}">Product deletes: delete-view pk=1</a></li>
+</ul>
+{% endblock %}
+</body>
+</html>
