@@ -1,0 +1,33 @@
+{% include 'myapp/0-base.html' %}
+{% load i18n %}  {# Нужно предварительно загрузить модуль для настройки значений в HTML #}
+
+{% block title %}
+    Internationalization
+{% endblock %}
+
+{% block body %}
+<div> {# Пример отображения настроенных значений из кода #}
+    value
+</div>
+<div> {# Пример отображения и настройки значений в HTML #}
+    <p> {# 1 параметр - Значение по-умолчанию и для перевода. 2 параметр - доп. комментарий-подсказка для перевода. #}
+        {% translate 'Страница аутентификации' context 'Page for authenticate' %}
+    </p>
+    <p> {# Если продукт есть, то он и покажется, если нет - покажется переведенное сообщение-заглушка. #}
+        {% translate 'no products' as have_discount %}
+        {% firstof product.discount have_discount %}
+    </p>
+    <p> {# Настройка окончаний: "m,s" - 1 параметр для единственного числа, 2 параметр для множественного числа. #}
+        You have {{ items }} item{{ items|pluralize:"s" }}  {# Подходит только для английского языка. #}
+    </p>
+    <p> {# Перевод целых блоков. Т.к. внутри блока нельзя использовать теги, то переменные нужно вынести наружу блока. #}
+        {% url 'myapp:list-view' as product_list_url %}
+        {% blocktranslate count product_count=value|length %}
+            <p>Have only one count.</p>  {# Текст для единственного рода #}
+            {% plural %}
+            <p>Have {{ product_count }} products.</p>  {# Текст для множественного рода #}
+            <a href="{{ product_list_url }}">Go to products list</a>
+        {% endblocktranslate %}
+    </p>
+</div>
+{% endblock %}
