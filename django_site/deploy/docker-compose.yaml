@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: deploy
+    command: ["gunicorn", "django_site.wsgi:application", "--bind", "0.0.0.0:8000"]
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: always  # Приложение будет перезапущено в случае каких то ошибок: always - всегда.
+    logging:
+      driver: "json-file"  # Запись логов в json-файлы.
+      options:
+        max-file: "10"  # Максимум 10 файлов с логами.
+        max-size: "200k" # Вес каждого файла с логами 200Кб.
+    volumes:
+      - ./django_site/database:/app/database
