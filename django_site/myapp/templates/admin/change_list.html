@@ -1,9 +1,0 @@
-{% extends 'admin/change_list.html' %}
-
-{% block object-tools-items %}
-{% load admin_urls %}
-<li> {# Наследуется страница админ-панели списка элементов и добавляется кнопка на странице #}
-    <a href="{% url 'admin:import-csv' %}" class="addlink">Import CSV</a>
-</li>
-{{block.super}} {# наследуем остальные кнопки, которые уже были на странице #}
-{% endblock %}
